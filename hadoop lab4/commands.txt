@@ -1,0 +1,108 @@
+revanth@revanth:~$ su hdoop
+Password: 
+hdoop@revanth:/home/revanth$ cd
+hdoop@revanth:~$ start-all.sh
+WARNING: Attempting to start all Apache Hadoop daemons as hdoop in 10 seconds.
+WARNING: This is not a recommended production deployment configuration.
+WARNING: Use CTRL-C to abort.
+Starting namenodes on [localhost]
+Starting datanodes
+Starting secondary namenodes [revanth]
+2021-05-02 21:38:46,652 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Starting resourcemanager
+Starting nodemanagers
+hdoop@revanth:~$ jps
+3392 DataNode
+3571 SecondaryNameNode
+3972 NodeManager
+3830 ResourceManager
+3258 NameNode
+4319 Jps
+hdoop@revanth:~$ version
+version: command not found
+hdoop@revanth:~$ hadoop version
+Hadoop 3.2.2
+Source code repository Unknown -r 7a3bc90b05f257c8ace2f76d74264906f0f7a932
+Compiled by hexiaoqiao on 2021-01-03T09:26Z
+Compiled with protoc 2.5.0
+From source with checksum 5a8f564f46624254b27f6a33126ff4
+This command was run using /home/hdoop/hadoop-3.2.2/share/hadoop/common/hadoop-common-3.2.2.jar
+hdoop@revanth:~$ hadoop fs -mkdir /samplefile1
+2021-05-02 21:40:46,163 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@revanth:~$ hadoop fs -mkdir /samplefile2
+2021-05-02 21:41:22,806 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@revanth:~$ hadoop fs -ls /
+2021-05-02 21:41:52,176 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-04-30 13:29 /input
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:40 /samplefile1
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:41 /samplefile2
+hdoop@revanth:~$ ls
+dfsdata  hadoop-3.2.2  hadoop-3.2.2.tar.gz  tmpdata
+hdoop@revanth:~$ mkdir lab
+hdoop@revanth:~$ mkdir lab/samples/
+hdoop@revanth:~$ mkdir lab/samples/file1
+hdoop@revanth:~$ mkdir lab/samples/file2
+hdoop@revanth:~$ hadoop fs -put ~/lab/samples/file1 /
+2021-05-02 21:43:24,480 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@revanth:~$ hadoop fs -put ~/lab/samples/file2 /samplefile1
+2021-05-02 21:43:46,847 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@revanth:~$ hadoop fs -ls /
+2021-05-02 21:44:53,889 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 4 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /file1
+drwxr-xr-x   - hdoop supergroup          0 2021-04-30 13:29 /input
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /samplefile1
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:41 /samplefile2
+hdoop@revanth:~$ hadoop fs -ls -R /
+2021-05-02 21:45:09,577 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /file1
+drwxr-xr-x   - hdoop supergroup          0 2021-04-30 13:29 /input
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /samplefile1
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /samplefile1/file2
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:41 /samplefile2
+hdoop@revanth:~$ hadoop fs -copyFromLocal ~/lab/samples/file3 /samplefile2
+2021-05-02 21:45:32,701 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+copyFromLocal: `/home/hdoop/lab/samples/file3': No such file or directory
+hdoop@revanth:~$ fs -ls -R /
+
+Command 'fs' not found, but can be installed with:
+
+sudo apt install openafs-client
+
+hdoop@revanth:~$ hadoop fs -ls -R /
+2021-05-02 21:46:38,205 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /file1
+drwxr-xr-x   - hdoop supergroup          0 2021-04-30 13:29 /input
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /samplefile1
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:43 /samplefile1/file2
+drwxr-xr-x   - hdoop supergroup          0 2021-05-02 21:41 /samplefile2
+hdoop@revanth:~$ hadoop fs -get /file1 ~/lab/copies
+2021-05-02 21:47:02,341 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@revanth:~$ hadoop fs -count -v -h /
+2021-05-02 21:47:37,217 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+   DIR_COUNT   FILE_COUNT       CONTENT_SIZE PATHNAME
+           6            0                  0 /
+hdoop@revanth:~$ hadoop fs -count -v -h -q /
+2021-05-02 21:47:49,936 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+       QUOTA       REM_QUOTA     SPACE_QUOTA REM_SPACE_QUOTA    DIR_COUNT   FILE_COUNT       CONTENT_SIZE PATHNAME
+       8.0 E           8.0 E            none             inf            6            0                  0 /
+hdoop@revanth:~$ hadoop fs -count -v -q /
+2021-05-02 21:48:02,522 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+       QUOTA       REM_QUOTA     SPACE_QUOTA REM_SPACE_QUOTA    DIR_COUNT   FILE_COUNT       CONTENT_SIZE PATHNAME
+9223372036854775807 9223372036854775801            none             inf            6            0                  0 /
+hdoop@revanth:~$ hadoop fs -count -v -u /
+2021-05-02 21:48:15,955 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+       QUOTA       REM_QUOTA     SPACE_QUOTA REM_SPACE_QUOTA PATHNAME
+9223372036854775807 9223372036854775801            none             inf /
+hdoop@revanth:~$ hadoop fs -df 
+2021-05-02 21:48:30,931 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Filesystem                    Size   Used    Available  Use%
+hdfs://127.0.0.1:9000  26602364928  28672  11127087104    0%
+hdoop@revanth:~$ hadoop fs -df -h
+2021-05-02 21:48:41,695 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Filesystem               Size  Used  Available  Use%
+hdfs://127.0.0.1:9000  24.8 G  28 K     10.4 G    0%
+hdoop@revanth:~$ hadoop fs -du -s /samplefile2/text1
+2021-05-02 21:49:07,740 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+du: `/samplefile2/text1': No such file or directory
